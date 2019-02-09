@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-9">
 
-        <div  v-if="this.$store.card !== null">
+        <div  v-if="this.$store.state.cart.length > 0">
             <table class="table table-bordered">
                 <tr>
                     <th>Obrazek</th>
@@ -21,15 +21,15 @@
                     <th>Miara</th>
                     <th>Opcje</th>
                 </tr>
-                <tr v-for="(product, index) in this.$store.card" :key="product.id">
-                    <td class="text-center"><img class="w-25" v-bind:src="'/images/products/' + product[index].image"></td>
+                <tr v-for="(product, index) in this.$store.state.cart" :key="product.id">
+                    <td class="text-center"><img class="w-25" :src="'/images/products/' + product[index].image"></td>
                     <td>{{ product[index].name }}</td>
-                    <td class="text-center"><input type="text" name="count" v-model="product.count" class="text-center w-50" v-on:change="poprawIlosc(product.id, product.count)"></td>
+                    <td class="text-center"><input type="text" name="count" v-model="product.quantity" class="text-center w-50" v-on:change="poprawIlosc(product.id, product.quantity)"></td>
                     <td>{{ product[index].price }} zł</td>
                     <td>{{ product[index].priceGross }} zł</td>
                     <td>{{ product[index].tax }}</td>
                     <td>{{ product[index].unit }}</td>
-                    <td><span @click="remove(product[index].id)" class="btn btn-danger" >usuń</span></td>
+                    <td><span @click="remove(index)" class="btn btn-danger" >usuń</span></td>
                 </tr>
 
             </table>
@@ -92,7 +92,7 @@
             <div class="col">
                 <div class="row">
                     <div class="col">Kwota całkowita</div>
-                    <div class="col">{{ showCartValue }} zł</div>
+                    <div class="col">{{ this.$store.getters.cartcount }} zł</div>
                 </div>
                 <div class="row">
                     <div class="col">Wysyłka</div>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="row">
                     <div class="col">Suma</div>
-                    <div class="col" v-if="this.$store.getters.cardvalue > 0 ">{{ this.$store.getters.cardvalue + 25 }} zł</div>
+                    <div class="col" v-if="this.$store.getters.cartvalue > 0 ">{{ this.$store.getters.cartvalue + 25 }} zł</div>
                     <div class="col" v-else>0 zł</div>
                 </div>
             </div>
@@ -123,51 +123,23 @@
 export default {
 
     name: 'cart',
+    data() {
+        return {
+
+        }
+    },
     methods:{
         clear() {
-            this.$store.dispatch('clearCard')
+            this.$store.dispatch('clearCart')
         },
-        remove: function(id){
-            axios.get(`${this.$store.state.api}/cart/remove/${id}`)
-            .then(function(response){
-                options.lista = response.data.lista;
-
-                axios.get(`${this.$store.state.api}/cart/get`)
-                .then(function(response)
-                {
-                    if( response.data.lista )
-                    {
-                        this.$store.state.cart.count = response.data.lista.lenght;
-                    }
-                });
-
-            });
+        remove: function(index) {
+            this.$store.dispatch('removeFromCart', {
+                index
+            })
         },
         poprawIlosc: function(id, count)
         {
-            axios.get(`${this.$store.state.api}/cart/add/${id}/${count}`)
-            .then(function(response)
-            {
 
-                axios.get(`${this.$store.state.api}/cart/value`)
-                .then(function(response)
-                {
-                    if( response.data.lista )
-                    {
-                        this.$store.state.cart.value = response.data.lista;
-                    }
-                });
-
-                axios.get(`${this.$store.state.api}/cart/get`)
-                .then(function(response)
-                {
-                    if( response.data.lista )
-                    {
-                        this.lista = response.data.lista;
-                        this.$store.state.cart.count = response.data.lista.lenght;
-                    }
-                });
-            });
         }
     }
 }
