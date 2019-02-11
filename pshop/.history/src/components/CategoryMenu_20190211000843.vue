@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         loadCategory() {
-            Axios.get(`${this.$store.state.api}/products/byidcategories/${this.categoryId}`)
+            Axios.get(`${this.$store.state.api}/products/bycategory/${this.categoryId}`)
             .then( function(response) {
                 this.categories = response.lista
             })

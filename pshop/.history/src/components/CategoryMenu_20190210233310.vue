@@ -1,9 +1,10 @@
 <template>
     <nav class="sidebar text-light position-fixed" style="height:100vh">
+        <div>WSZYSTKIE KATEGORIE</div>
         <div id="categoriesList">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item ml-1" v-for="category in categories" key="category.id">{{ category.name }}</li>
+                    <li class="nav-item ml-1">Akcesoria komputerowe</li>
                 </ul>
             </div>
         </div>
@@ -22,7 +23,7 @@ export default {
     },
     data() {
         return {
-            categories: []
+            list: []
         }
     },
     created() {
@@ -30,9 +31,9 @@ export default {
     },
     methods: {
         loadCategory() {
-            Axios.get(`${this.$store.state.api}/products/byidcategories/${this.categoryId}`)
+            Axios.get(`${this.$store.state.api}/products/bycategory/${this.categoryId}`)
             .then( function(response) {
-                this.categories = response.lista
+                this.list = response.lista
             })
         }
     }

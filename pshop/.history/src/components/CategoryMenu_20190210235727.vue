@@ -3,7 +3,7 @@
         <div id="categoriesList">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item ml-1" v-for="category in categories" key="category.id">{{ category.name }}</li>
+                    <li class="nav-item ml-1" v-for="category in categories" key="category.id">{{ category.nazwa }}</li>
                 </ul>
             </div>
         </div>
@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         loadCategory() {
-            Axios.get(`${this.$store.state.api}/products/byidcategories/${this.categoryId}`)
+            Axios.get(`${this.$store.state.api}/products/bycategory/${this.categoryId}`)
             .then( function(response) {
                 this.categories = response.lista
             })

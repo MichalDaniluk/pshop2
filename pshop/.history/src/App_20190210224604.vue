@@ -1,12 +1,12 @@
 <template>
   <div id="app">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="/">direct24.com.pl</a>
+        <a class="navbar-brand" href="#">direct24.com.pl</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="/">Start</a>
@@ -29,11 +29,7 @@
     </nav>
 
     <div class="row">
-      <div class="col-md-2 bg-dark">
-        <br><br><br>
-        <div class="text-left">
-          <span class="text-light">WSZYSTKIE KATEGORIE</span><span class="fas fa-align-justify text-warning text-right"></span>
-        </div>
+      <div class="col-md-2">
         <CategoryMenu :categoryId="0"></CategoryMenu>
       </div>
       <div class="col-md-10">

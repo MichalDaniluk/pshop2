@@ -30,10 +30,6 @@
 
     <div class="row">
       <div class="col-md-2 bg-dark">
-        <br><br><br>
-        <div class="text-left">
-          <span class="text-light">WSZYSTKIE KATEGORIE</span><span class="fas fa-align-justify text-warning text-right"></span>
-        </div>
         <CategoryMenu :categoryId="0"></CategoryMenu>
       </div>
       <div class="col-md-10">
